@@ -1,0 +1,6 @@
+.hero-bg {
+  background: url("../../assets/images/chair.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
