@@ -4,7 +4,7 @@ const InfoCard = ({ data }) => {
   const { title, desc, bg, img } = data;
   return (
     <div
-      className={`container card lg:card-side bg-base-100 shadow-xl text-white ${bg}`}
+      className={`container card lg:card-side shadow-xl text-white ${bg}`}
     >
       <figure className="py-3 px-5">
         <img className="w-[60px] h-[60px]" src={img} alt="Album" />

@@ -1,11 +1,12 @@
 import React from "react";
 import chair from "../../assets/images/chair.png";
 import BtnPrimary from "../Utilities/BtnPrimary";
+import Info from "./Info";
 import "./Hero.css";
 
 const Hero = () => {
   return (
-    <div className="">
+    <div className="container mx-auto">
       <div className="hero min-h-[80vh]">
         <div className="hero-content grid grid-cols-1 md:grid-cols-2">
           <div className="order-2 md:order-1">
@@ -17,7 +18,7 @@ const Hero = () => {
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
               et a id nisi.
             </p>
-            {<BtnPrimary />}
+            <BtnPrimary>Get Started</BtnPrimary>
           </div>
           <div className="flex order-1 md:order-1 md:justify-end">
             <img
@@ -28,6 +29,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      <Info />
     </div>
   );
 };

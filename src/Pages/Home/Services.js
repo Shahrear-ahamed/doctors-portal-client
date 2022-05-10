@@ -27,7 +27,7 @@ const Services = () => {
     },
   ];
   return (
-    <div className="my-16">
+    <div className="container mx-auto my-16">
       <div className="text-center">
         <h3 className="text-xl uppercase text-secondary font-bold">
           Our Services
@@ -39,7 +39,9 @@ const Services = () => {
           <Service key={service._id} service={service} />
         ))}
       </div>
-      <div>{<ServiceHero />}</div>
+      <div>
+        <ServiceHero />
+      </div>
     </div>
   );
 };

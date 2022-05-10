@@ -8,7 +8,7 @@ const ServiceHero = () => {
       <div className="hero-content grid grid-cols-1 md:grid-cols-2 justify-items-center">
         <img
           src={treatment}
-          className="max-w-sm rounded-lg shadow-2xl"
+          className="max-w-sm w-11/12 rounded-lg shadow-2xl"
           alt="our service img"
         />
         <div>
@@ -18,7 +18,7 @@ const ServiceHero = () => {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-          {<BtnPrimary />}
+          <BtnPrimary>Get Started</BtnPrimary>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
-const BtnPrimary = () => {
+const BtnPrimary = ({ children }) => {
   return (
-    <button className="btn border-0 text-white uppercase bg-gradient-to-r from-secondary to-primary">
-      Get Started
+    <button className="btn-primary">
+      {children}
     </button>
   );
 };

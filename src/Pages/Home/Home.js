@@ -1,15 +1,17 @@
 import React from "react";
+import ContactUs from "./ContactUs";
 import Hero from "./Hero";
-import Info from "./Info";
+import HomeAppoinment from "./HomeAppoinment";
 import Services from "./Services";
 
 const Home = () => {
   return (
-    <div className="container mx-auto">
+    <>
       <Hero />
-      <Info />
       <Services />
-    </div>
+      <HomeAppoinment />
+      <ContactUs />
+    </>
   );
 };
 
