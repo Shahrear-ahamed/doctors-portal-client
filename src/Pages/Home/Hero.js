@@ -1,5 +1,6 @@
 import React from "react";
 import chair from "../../assets/images/chair.png";
+import BtnPrimary from "../Utilities/BtnPrimary";
 import "./Hero.css";
 
 const Hero = () => {
@@ -16,9 +17,7 @@ const Hero = () => {
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
               et a id nisi.
             </p>
-            <button className="btn border-0 text-white uppercase bg-gradient-to-r from-secondary to-primary">
-              Get Started
-            </button>
+            {<BtnPrimary />}
           </div>
           <div className="flex order-1 md:order-1 md:justify-end">
             <img
