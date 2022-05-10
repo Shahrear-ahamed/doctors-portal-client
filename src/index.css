@@ -17,7 +17,7 @@ code {
 }
 
 .contact-us {
-  @apply w-full p-2 rounded-sm outline-none;
+  @apply w-full p-3 rounded-md outline-none;
 }
 .btn-primary {
   @apply btn border-0 px-5 text-white uppercase bg-gradient-to-r from-secondary to-primary;

@@ -4,7 +4,7 @@ import appoinment from "../../assets/images/appointment.png";
 const ContactUs = () => {
   return (
     <section className="mt-10" style={{ background: `url(${appoinment})` }}>
-      <div className="max-w-[450px] mx-auto text-center space-y-2 py-4">
+      <div className="max-w-[550px] mx-auto text-center space-y-2 py-10">
         <h3 className="text-secondary text-lg font-bold">Appoinment</h3>
         <h2 className="text-3xl font-semibold text-white">
           Make an appointment Today
@@ -31,7 +31,7 @@ const ContactUs = () => {
           <textarea
             name="message"
             id="messageInput"
-            className="contact-us"
+            className="contact-us resize-none"
             cols="30"
             rows="7"
             placeholder="Your message"
