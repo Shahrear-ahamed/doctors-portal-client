@@ -1,11 +1,20 @@
+import { format } from "date-fns";
 import React from "react";
 
-const BookingModal = ({ treatment, count }) => {
-  const { name } = treatment;
+const BookingModal = ({ treatment, date, setTreatment }) => {
+  const { _id, name, slots } = treatment;
+  const treatmentDate = format(date, "PP");
 
   //modal submit and store data
   const handleModal = (e) => {
     e.preventDefault();
+
+    // get data and send to database
+    const slot = e.target.slot.value;
+    console.log(_id, treatmentDate, slot);
+
+    // close modal are here
+    setTreatment(null);
   };
   return (
     <div>
@@ -20,13 +29,45 @@ const BookingModal = ({ treatment, count }) => {
           </label>
           <h3 className="font-bold text-lg">{name}</h3>
           {/* userinput are here */}
-          <form onSubmit={handleModal}>
+          <form onSubmit={handleModal} className="space-y-4 mt-5">
             <input
               type="text"
-              placeholder="Type here"
-              className="input w-full max-w-xs"
+              name="name"
+              readOnly
+              value={treatmentDate}
+              className="input input-bordered w-full focus:outline-none"
             />
-            <input type="submit" value="Submit" className="w-full" />
+            <select
+              name="slot"
+              className="select select-bordered w-full focus:outline-none"
+            >
+              {slots.map((slot, index) => (
+                <option key={index}>{slot}</option>
+              ))}
+            </select>
+            <input
+              type="text"
+              name="name"
+              placeholder="Your name"
+              className="input input-bordered w-full focus:outline-none"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              className="input input-bordered w-full focus:outline-none"
+            />
+            <input
+              type="number"
+              name="phone"
+              placeholder="Phone number"
+              className="input input-bordered w-full focus:outline-none"
+            />
+            <input
+              type="submit"
+              value="Submit"
+              className="w-full text-white bg-accent py-3 rounded-md cursor-pointer"
+            />
           </form>
         </div>
       </div>
