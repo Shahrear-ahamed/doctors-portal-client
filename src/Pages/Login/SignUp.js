@@ -2,15 +2,15 @@ import React from "react";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import {
-  useSignInWithEmailAndPassword,
-  useSignInWithGoogle,
+    useCreateUserWithEmailAndPassword,
+    useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 
 const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
-  const [signInWithEmailAndPassword, user, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
   const {
     register,
     formState: { errors },
@@ -34,18 +34,41 @@ const Login = () => {
   // submit form
   const onSubmit = (data) => {
     console.log(data);
-    signInWithEmailAndPassword(data.email, data.password);
+    createUserWithEmailAndPassword(data.email, data.password);
   };
 
   return (
     <section className="flex h-screen justify-center items-center">
       <div className="card w-[450px] bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="text-2xl text-center font-bold">Login</h2>
+          <h2 className="text-2xl text-center font-bold">Sign Up</h2>
 
           {/* form are here  */}
 
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-control w-ful">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Your Name"
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Name is required",
+                  },
+                })}
+                className="input input-bordered w-full px-2 md:px-5 focus:outline-none"
+              />
+              <label className="label">
+                {errors.name?.type === "required" && (
+                  <span className="label-text text-red-600">
+                    {errors.name.message}
+                  </span>
+                )}
+              </label>
+            </div>
             <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -117,16 +140,16 @@ const Login = () => {
             ) : (
               <input
                 type="submit"
-                value="Login"
+                value="Sign Up"
                 className="btn w-full text-white"
               />
             )}
           </form>
           <p>
             <small>
-              New to Doctors Portal?{" "}
-              <Link to="/signup" className="text-primary">
-                Create new account
+              Already have an account?{" "}
+              <Link to="/login" className="text-primary">
+                please login
               </Link>
             </small>
           </p>
