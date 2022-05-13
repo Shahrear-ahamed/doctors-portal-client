@@ -2,15 +2,18 @@ import React from "react";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import {
-    useCreateUserWithEmailAndPassword,
-    useSignInWithGoogle,
+  useCreateUserWithEmailAndPassword,
+  useSignInWithGoogle,
+  useUpdateProfile,
 } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const naivgate = useNavigate();
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
+  const [updateProfile, , upError] = useUpdateProfile(auth);
   const {
     register,
     formState: { errors },
@@ -21,20 +24,24 @@ const Login = () => {
   let errorMessage;
 
   // SHOW ERROR
-  if (gError || error) {
+  if (gError || error || upError) {
+    const googleError = gError?.code.split("/")[1];
+    const createError = error?.code.split("/")[1];
+    const updateError = upError?.code.split("/")[1];
     errorMessage = (
       <p className="text-red-500">
-        <small>{gError?.code.split("/")[1] || error?.code.split("/")[1]}</small>
+        <small>{googleError || createError || updateError}</small>
       </p>
     );
   }
   if (user || gUser) {
-    console.log(user);
+    // console.log(user);
   }
   // submit form
-  const onSubmit = (data) => {
-    console.log(data);
-    createUserWithEmailAndPassword(data.email, data.password);
+  const onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(data.email, data.password);
+    await updateProfile({ displayName: data.name });
+    naivgate("/appointment");
   };
 
   return (
