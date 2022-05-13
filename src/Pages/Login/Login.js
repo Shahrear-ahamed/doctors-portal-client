@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import {
@@ -31,9 +31,13 @@ const Login = () => {
       </p>
     );
   }
-  if (user || gUser) {
-    navigate(from);
-  }
+
+  useEffect(() => {
+    if (user || gUser) {
+      navigate(from);
+    }
+  }, [user, gUser, from, navigate]);
+
   // submit form
   const onSubmit = async (data) => {
     await signInWithEmailAndPassword(data.email, data.password);
@@ -114,6 +118,11 @@ const Login = () => {
                 )}
               </label>
             </div>
+            <p className="py-3">
+              <small>
+                <Link to="/forgetpassword">Forget password?</Link>
+              </small>
+            </p>
             {errorMessage}
             {gLoading || loading ? (
               <button className="btn w-full loading text-white">loading</button>

@@ -1,47 +1,59 @@
-import React from "react";
+import React, { useEffect } from "react";
 import auth from "../../firebase.init";
 import { useForm } from "react-hook-form";
 import {
   useCreateUserWithEmailAndPassword,
+  useSendEmailVerification,
   useSignInWithGoogle,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const naivgate = useNavigate();
+  const location = useLocation();
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const [updateProfile, , upError] = useUpdateProfile(auth);
+  const [sendEmailVerification, , emailiError] = useSendEmailVerification(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const from = location.state?.from?.pathname || "/";
 
   // custom messages
   let errorMessage;
 
   // SHOW ERROR
-  if (gError || error || upError) {
+  if (gError || error || upError || emailiError) {
     const googleError = gError?.code.split("/")[1];
     const createError = error?.code.split("/")[1];
     const updateError = upError?.code.split("/")[1];
+    const emailVerifyError = emailiError?.cond.split("/")[1];
     errorMessage = (
       <p className="text-red-500">
-        <small>{googleError || createError || updateError}</small>
+        <small>
+          {googleError || createError || updateError || emailVerifyError}
+        </small>
       </p>
     );
   }
-  if (user || gUser) {
-    // console.log(user);
-  }
+  useEffect(() => {
+    if (user || gUser) {
+      toast.success("Email verification was send. please verify your account");
+      naivgate(from);
+      // console.log(user);
+    }
+  }, [from, user, gUser, naivgate]);
   // submit form
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
-    naivgate("/appointment");
+    await sendEmailVerification(data.email);
   };
 
   return (
@@ -141,6 +153,11 @@ const Login = () => {
                 )}
               </label>
             </div>
+            <p className="py-3">
+              <small>
+                <Link to="/forgetpassword">Forget password?</Link>
+              </small>
+            </p>
             {errorMessage}
             {gLoading || loading ? (
               <button className="btn w-full loading text-white">loading</button>

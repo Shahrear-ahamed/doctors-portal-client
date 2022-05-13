@@ -4,22 +4,22 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
 // calender style
-const css = `
-  .my-selected:not([disabled]) { 
-    font-weight: bold; 
-    color: #0FCFEC;
-    border: 2px solid #0FCFEC;
-  }
-  .my-selected:hover:not([disabled]) { 
-    border-color: #19D3AE;
-    color: #19D3AE;
-  }
-  .my-today { 
-    font-weight: bold;
-    font-size: 140%; 
-    color: #19D3AE;
-  }
-`;
+// const css = `
+//   .my-selected:not([disabled]) { 
+//     font-weight: bold; 
+//     color: #0FCFEC;
+//     border: 2px solid #0FCFEC;
+//   }
+//   .my-selected:hover:not([disabled]) { 
+//     border-color: #19D3AE;
+//     color: #19D3AE;
+//   }
+//   .my-today { 
+//     font-weight: bold;
+//     font-size: 140%; 
+//     color: #19D3AE;
+//   }
+// `;
 
 const AppointmentHero = ({ date, setDate }) => {
   return (
@@ -31,16 +31,10 @@ const AppointmentHero = ({ date, setDate }) => {
           alt="Appointment hero img"
         />
         <div>
-          <style>{css}</style>
           <DayPicker
             mode="single"
             selected={date}
             onSelect={setDate}
-            modifiersClassNames={{
-              selected: "my-selected",
-              today: "my-today",
-            }}
-            style={{width:"100%"}}
           />
         </div>
       </div>
