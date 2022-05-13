@@ -8,14 +8,15 @@ const AvailableAppointment = ({ date }) => {
   const [treatment, setTreatement] = useState(null);
 
   useEffect(() => {
-    fetch("services.json")
+    fetch("http://localhost:5000/service")
       .then((res) => res.json())
       .then((data) => setServices(data));
   });
   return (
-    <section className="container mx-auto">
+    <section className="container mx-auto px-5 xl:px-0">
       <h4 className="text-xl font-semibold text-secondary text-center">
-        Available Appointments on {format(date, "PP")}
+        Available Appointments on{" "}
+        <span className="block md:inline">{format(date, "PP")}</span>
       </h4>
       <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {services.map((service) => (

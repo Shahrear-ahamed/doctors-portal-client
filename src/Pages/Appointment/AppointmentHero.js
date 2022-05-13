@@ -27,7 +27,7 @@ const AppointmentHero = ({ date, setDate }) => {
       <div className="hero-content flex-col lg:flex-row-reverse">
         <img
           src={appointment}
-          className="max-w-sm rounded-lg shadow-2xl"
+          className="w-full md:max-w-sm rounded-lg shadow-2xl"
           alt="Appointment hero img"
         />
         <div>
@@ -40,6 +40,7 @@ const AppointmentHero = ({ date, setDate }) => {
               selected: "my-selected",
               today: "my-today",
             }}
+            style={{width:"100%"}}
           />
         </div>
       </div>
