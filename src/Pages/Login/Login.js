@@ -6,6 +6,7 @@ import {
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import useToken from "../../Hooks/useToken";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const [token] = useToken(user || gUser);
 
   // custom messages
   let errorMessage;
@@ -33,10 +35,10 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (user || gUser) {
+    if (token) {
       navigate(from);
     }
-  }, [user, gUser, from, navigate]);
+  }, [token, from, navigate]);
 
   // submit form
   const onSubmit = async (data) => {

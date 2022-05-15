@@ -9,6 +9,7 @@ import {
 } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import useToken from "../../Hooks/useToken";
 
 const Login = () => {
   const naivgate = useNavigate();
@@ -23,6 +24,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  const [token] = useToken(user || gUser);
   const from = location.state?.from?.pathname || "/";
 
   // custom messages
@@ -30,10 +32,10 @@ const Login = () => {
 
   // SHOW ERROR
   if (gError || error || upError || emailiError) {
-    const googleError = gError?.code.split("/")[1];
-    const createError = error?.code.split("/")[1];
-    const updateError = upError?.code.split("/")[1];
-    const emailVerifyError = emailiError?.cond.split("/")[1];
+    const googleError = gError?.code?.split("/")[1];
+    const createError = error?.code?.split("/")[1];
+    const updateError = upError?.code?.split("/")[1];
+    const emailVerifyError = emailiError?.code?.split("/")[1];
     errorMessage = (
       <p className="text-red-500">
         <small>
@@ -42,18 +44,18 @@ const Login = () => {
       </p>
     );
   }
+
   useEffect(() => {
-    if (user || gUser) {
-      toast.success("Email verification was send. please verify your account");
+    if (token) {
       naivgate(from);
-      // console.log(user);
     }
-  }, [from, user, gUser, naivgate]);
+  }, [from, naivgate, token]);
   // submit form
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     await updateProfile({ displayName: data.name });
     await sendEmailVerification(data.email);
+    toast.success("Email verification was send. please verify your account");
   };
 
   return (
