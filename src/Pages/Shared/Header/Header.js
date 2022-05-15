@@ -9,6 +9,7 @@ const Header = () => {
 
   const logOut = () => {
     signOut(auth);
+    localStorage.removeItem("accessToken");
   };
 
   // menu items are here
