@@ -6,6 +6,7 @@ import Home from "./Pages/Home/Home";
 import FrogetPassword from "./Pages/Login/FrogetPassword";
 import Login from "./Pages/Login/Login";
 import RequireAuth from "./Pages/Login/RequireAuth";
+import RequireAdmin from "./Pages/Login/RequireAdmin";
 import SignUp from "./Pages/Login/SignUp";
 import Header from "./Pages/Shared/Header/Header";
 import { ToastContainer } from "react-toastify";
@@ -41,7 +42,14 @@ function App() {
           <Route index element={<MyAppointment />} />
           <Route path="myreviews" element={<MyReviews />} />
           <Route path="history" element={<MyHistory />} />
-          <Route path="users" element={<AllUsers />} />
+          <Route
+            path="users"
+            element={
+              <RequireAdmin>
+                <AllUsers />
+              </RequireAdmin>
+            }
+          />
         </Route>
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
