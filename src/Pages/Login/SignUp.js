@@ -12,13 +12,13 @@ import { toast } from "react-toastify";
 import useToken from "../../Hooks/useToken";
 
 const Login = () => {
-  const naivgate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const [updateProfile, , upError] = useUpdateProfile(auth);
-  const [sendEmailVerification, , emailiError] = useSendEmailVerification(auth);
+  const [sendEmailVerification, , emailError] = useSendEmailVerification(auth);
   const {
     register,
     formState: { errors },
@@ -31,11 +31,11 @@ const Login = () => {
   let errorMessage;
 
   // SHOW ERROR
-  if (gError || error || upError || emailiError) {
+  if (gError || error || upError || emailError) {
     const googleError = gError?.code?.split("/")[1];
     const createError = error?.code?.split("/")[1];
     const updateError = upError?.code?.split("/")[1];
-    const emailVerifyError = emailiError?.code?.split("/")[1];
+    const emailVerifyError = emailError?.code?.split("/")[1];
     errorMessage = (
       <p className="text-red-500">
         <small>
@@ -47,9 +47,9 @@ const Login = () => {
 
   useEffect(() => {
     if (token) {
-      naivgate(from);
+      navigate(from);
     }
-  }, [from, naivgate, token]);
+  }, [from, navigate, token]);
   // submit form
   const onSubmit = async (data) => {
     await createUserWithEmailAndPassword(data.email, data.password);
@@ -67,7 +67,7 @@ const Login = () => {
           {/* form are here  */}
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control w-ful">
+            <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Name</span>
               </label>
@@ -137,7 +137,7 @@ const Login = () => {
                   },
                   minLength: {
                     value: 6,
-                    message: "Password must be atleast 6 caracter or longer",
+                    message: "Password must be at least 6 character or longer",
                   },
                 })}
                 className="input input-bordered w-full px-2 md:px-5 focus:outline-none"
