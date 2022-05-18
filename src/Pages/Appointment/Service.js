@@ -27,7 +27,7 @@ const Service = ({ service, setTreatement }) => {
             disabled={slots.length === 0}
             className="btn btn-primary modal-button"
           >
-            Book Appointmnet
+            Book Appointment
           </label>
         </div>
       </div>

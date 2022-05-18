@@ -20,6 +20,7 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+  console.log(user);
   const [token] = useToken(user || gUser);
 
   // custom messages
@@ -43,7 +44,6 @@ const Login = () => {
   // submit form
   const onSubmit = async (data) => {
     await signInWithEmailAndPassword(data.email, data.password);
-    navigate("/appointment");
   };
 
   return (
