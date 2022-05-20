@@ -20,7 +20,6 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  console.log(user);
   const [token] = useToken(user || gUser);
 
   // custom messages

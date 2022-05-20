@@ -18,6 +18,7 @@ import MyHistory from "./Pages/Dashboard/MyHistory";
 import AllUsers from "./Pages/Dashboard/AllUsers";
 import AddDoctor from "./Pages/Dashboard/AddDoctor";
 import ManageDoctors from "./Pages/Dashboard/ManageDoctors";
+import Payment from "./Pages/Dashboard/Payment";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
           <Route index element={<MyAppointment />} />
           <Route path="myreviews" element={<MyReviews />} />
           <Route path="history" element={<MyHistory />} />
+          <Route path="payment/:id" element={<Payment />} />
           <Route
             path="users"
             element={
