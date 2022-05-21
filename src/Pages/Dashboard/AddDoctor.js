@@ -1,8 +1,8 @@
 import React from "react";
-import { useQuery } from "react-query";
-import Loading from "../Shared/Loading/Loading";
 import { useForm } from "react-hook-form";
+import { useQuery } from "react-query";
 import { toast } from "react-toastify";
+import Loading from "../Shared/Loading/Loading";
 
 const AddDoctor = () => {
   const imageApiKey = "ba4ff4edefd1c59c93a156adaaba5a42";
@@ -13,7 +13,7 @@ const AddDoctor = () => {
     reset,
   } = useForm();
   const { data: services, isLoading } = useQuery("services", () =>
-    fetch("http://localhost:5000/service").then((res) => res.json())
+    fetch("https://doctors-portal-shahrear.herokuapp.com/service").then((res) => res.json())
   );
   if (isLoading) {
     return <Loading />;
@@ -39,7 +39,7 @@ const AddDoctor = () => {
             image: result.data.url,
           };
           // send data to backend and database
-          fetch("http://localhost:5000/doctor", {
+          fetch("https://doctors-portal-shahrear.herokuapp.com/doctor", {
             method: "POST",
             headers: {
               "content-type": "application/json",

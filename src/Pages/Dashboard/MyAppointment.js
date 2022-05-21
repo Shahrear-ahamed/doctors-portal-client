@@ -11,7 +11,7 @@ const MyAppointment = () => {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+      fetch(`https://doctors-portal-shahrear.herokuapp.com/booking?patient=${user.email}`, {
         method: "GET",
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -57,7 +57,14 @@ const MyAppointment = () => {
                   </Link>
                 )}
                 {a.price && a.paid && (
-                  <span className="text-success">Paid</span>
+                  <div>
+                    <p>
+                      <span className="text-success">Paid</span>
+                    </p>
+                    <p>
+                      <span className="text-success">{a.transactionId}</span>
+                    </p>
+                  </div>
                 )}
               </td>
             </tr>

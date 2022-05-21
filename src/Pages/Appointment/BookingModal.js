@@ -1,8 +1,8 @@
 import { format } from "date-fns";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import auth from "../../firebase.init";
 import { toast } from "react-toastify";
+import auth from "../../firebase.init";
 
 const BookingModal = ({ treatment, date, refetch, setTreatment }) => {
   const [user] = useAuthState(auth);
@@ -26,7 +26,7 @@ const BookingModal = ({ treatment, date, refetch, setTreatment }) => {
       phone: e.target.phone.value,
     };
 
-    fetch("http://localhost:5000/booking", {
+    fetch("https://doctors-portal-shahrear.herokuapp.com/booking", {
       method: "POST",
       headers: {
         "content-type": "application/json",

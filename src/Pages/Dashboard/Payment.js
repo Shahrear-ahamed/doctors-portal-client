@@ -5,11 +5,13 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Loading from "../Shared/Loading/Loading";
 import CheckoutForm from "./CheckoutForm";
-const stripePromise = loadStripe("pk_test_6pRNASCoBOKtIshFeQd4XMUh");
+const stripePromise = loadStripe(
+  "pk_test_51L1NV5AlO9OJiFpifgfWumRmZDbx7WPDiUH61SCd466UwSPXSdhJdrogfxfJVOa69axIn0mUCM9oRvjP0PkGcTbg00ZM5Ztwxa"
+);
 
 const Payment = () => {
   const { id } = useParams();
-  const url = `http://localhost:5000/booking/${id}`;
+  const url = `https://doctors-portal-shahrear.herokuapp.com/booking/${id}`;
   const { data: appointment, isLoading } = useQuery(["booking", id], () =>
     fetch(url, {
       method: "GET",

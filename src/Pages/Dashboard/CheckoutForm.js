@@ -5,12 +5,15 @@ const CheckoutForm = ({ appointment }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [cardError, setCardError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [processing, setProcessing] = useState(false);
+  const [transactionId, setTransactionId] = useState("");
   const [serverClientSecret, setServerClientSecret] = useState("");
-  const { price } = appointment;
+  const { _id, price, patient, patientName, phone } = appointment;
 
   useEffect(() => {
-    fetch("http://localhost:5000/create-payment-intent", {
-      method: "post",
+    fetch("https://doctors-portal-shahrear.herokuapp.com/create-payment-intent", {
+      method: "POST",
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -34,16 +37,61 @@ const CheckoutForm = ({ appointment }) => {
     }
 
     const card = elements.getElement(CardElement);
-    if (card == null) {
+    if (card === null) {
       return;
     }
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });
     setCardError(error?.message || "");
+    setSuccess("");
+    setProcessing(true);
+
+    // make payment
+    const { paymentIntent, intentError } = await stripe.confirmCardPayment(
+      serverClientSecret,
+      {
+        payment_method: {
+          card: card,
+          billing_details: {
+            name: patientName,
+            email: patient,
+            phone,
+          },
+        },
+      }
+    );
+    if (intentError) {
+      setProcessing(false);
+      setServerClientSecret(intentError?.message);
+    } else {
+      setServerClientSecret("");
+      setTransactionId(paymentIntent?.id);
+      setSuccess("Congrats! Your payment is done");
+
+      // store payment info in database
+      const payment = {
+        appointment: _id,
+        transactionId: paymentIntent.id,
+      };
+      fetch(`https://doctors-portal-shahrear.herokuapp.com/booking/${_id}`, {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify(payment),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setProcessing(false);
+        });
+    }
   };
+
+  // return ui are here
   return (
     <form onSubmit={handleSubmit}>
       <CardElement
@@ -64,13 +112,29 @@ const CheckoutForm = ({ appointment }) => {
         }}
       />
       {cardError && <p className="text-red-500 mt-3">{cardError}</p>}
-      <button
-        className="btn btn-secondary btn-sm mt-4 hover:text-white"
-        type="submit"
-        disabled={!stripe || !serverClientSecret}
-      >
-        Pay
-      </button>
+      {processing ? (
+        <button className="btn btn-secondary btn-sm mt-4 loading" />
+      ) : (
+        <button
+          className="btn btn-secondary btn-sm mt-4 hover:text-white"
+          type="submit"
+          disabled={!stripe || !serverClientSecret}
+        >
+          Pay
+        </button>
+      )}
+      {success && (
+        <div className="text-green-500 mt-3">
+          <p>{success}</p>
+          <p>
+            {" "}
+            your transaction id:
+            <span className="text-orange-500 font-semibold">
+              {transactionId}
+            </span>
+          </p>
+        </div>
+      )}
     </form>
   );
 };
